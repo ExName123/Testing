@@ -1,10 +1,12 @@
 package ru.framework.managers;
 
-import ru.framework.pages.taskOne.MainPage;
+import ru.framework.pages.taskone.MainPageLambdaSampleApp;
+import ru.framework.pages.tasktwo.MainPagePolytech;
 
 public class PageManager {
     private static PageManager INSTANCE = null;
-    private MainPage mainPage;
+    private MainPageLambdaSampleApp mainPageLambdaSampleApp;
+    private MainPagePolytech mainPagePolytech;
 
     private PageManager() {
 
@@ -17,10 +19,10 @@ public class PageManager {
         return INSTANCE;
     }
 
-    public MainPage getMainPage() {
-        if (mainPage == null) {
-            mainPage = new MainPage();
+    public MainPageLambdaSampleApp getMainPage() {
+        if (mainPageLambdaSampleApp == null) {
+            mainPageLambdaSampleApp = new MainPageLambdaSampleApp();
         }
-        return mainPage;
+        return mainPageLambdaSampleApp;
     }
 }
