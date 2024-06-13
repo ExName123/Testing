@@ -6,16 +6,10 @@ import ru.framework.pages.tests.BaseTests;
 public class PolytechTest extends BaseTests {
     @Test
     public void testSteps() {
-        pageManager.getMainPage()
-                .checkExistHeader()
-                .checkExistText()
-                .checkFirstItemListNotCrossedOut()
-                .checkFirstItemAndClick();
-        for (int i = 1; i < 5; i++) {
-            pageManager.getMainPage().checkItemsOfListAndClick(i);
-        }
-        pageManager.getMainPage().checkAddNewItem("test")
-                .checkClickAddedNewItem();
-
+     pageManager.getMainPagePolytech()
+             .checkButtonSheduleAndClick()
+             .checkButtonLookAtWebsiteAndClick()
+             .checkSearchForGroupAndCheckResults("23А-221")
+             .checkClickSearchForGroup();
     }
 }

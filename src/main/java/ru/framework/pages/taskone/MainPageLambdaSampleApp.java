@@ -32,13 +32,13 @@ public class MainPageLambdaSampleApp extends BasePage {
         WebElement headerElement = waitUtilElementToBeVisible(title);
         Assertions.assertTrue(headerElement.isDisplayed(), "Header is not visible");
         Assertions.assertEquals("LambdaTest Sample App", headerElement.getText(), "Header text \"LambdaTest Sample App\" is not found");
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkExistText() {
         waitUtilElementToBeVisible(labelSpan);
         Assertions.assertEquals("5 of 5 remaining", labelSpan.getText(), "Label text \"5 of 5 remaining\" is not found");
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkFirstItemListNotCrossedOut() {
@@ -46,7 +46,7 @@ public class MainPageLambdaSampleApp extends BasePage {
         waitUtilElementToBeVisible(firstItem);
         String classAttribute = firstItem.getAttribute("class");
         Assertions.assertTrue(classAttribute.contains("done-false"), "First item is strikethrough");
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkFirstItemAndClick() {
@@ -77,7 +77,7 @@ public class MainPageLambdaSampleApp extends BasePage {
         String newRemainingText = labelSpan.getText();
         int remainingAfter = Integer.parseInt(newRemainingText.split(" ")[0]);
         Assertions.assertEquals(remainingBefore - 1, remainingAfter, "Remaining items count did not decrease by 1 after checking the checkbox");
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkItemsOfListAndClick(int index) {
@@ -113,7 +113,7 @@ public class MainPageLambdaSampleApp extends BasePage {
         String newRemainingText = labelSpan.getText();
         int remainingAfter = Integer.parseInt(newRemainingText.split(" ")[0]);
         Assertions.assertEquals(remainingBefore - 1, remainingAfter, "Remaining items count did not decrease by 1 after checking the checkbox at index " + index);
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkAddNewItem(String itemText) {
@@ -143,7 +143,7 @@ public class MainPageLambdaSampleApp extends BasePage {
         WebElement newItem = itemsOfList.get(newItemIndex);
         String classAttribute = newItem.getAttribute("class");
         Assertions.assertTrue(classAttribute.contains("done-false"), "New item is strikethrough");
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 
     public MainPageLambdaSampleApp checkClickAddedNewItem() {
@@ -175,6 +175,6 @@ public class MainPageLambdaSampleApp extends BasePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return pageManager.getMainPage();
+        return pageManager.getMainPageLambdaSampleApp();
     }
 }
