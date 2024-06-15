@@ -1,5 +1,6 @@
 package ru.framework.pages.taskfour;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,30 +30,31 @@ public class TopMoviesPage extends BasePage {
     private WebElement sortByRatings;
     // Нажатие на кнопку "Все страны" и выбор страны
     public TopMoviesPage checkSelectCountry(String nameOfCountry) {
-        try {
-            Thread.sleep(1000); // Consider replacing with a proper wait
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        wait.until(ExpectedConditions.visibilityOf(allCountriesButton));
-        wait.until(ExpectedConditions.elementToBeClickable(allCountriesButton));
-        Assertions.assertTrue(allCountriesButton.isDisplayed(), "All Countries button is not displayed");
-        allCountriesButton.click();
-
-        wait.until(ExpectedConditions.visibilityOfAllElements(countryList));
-        boolean countryFound = false;
-        for (WebElement country : countryList) {
-            if (country.getText().equalsIgnoreCase(nameOfCountry)) {
-                wait.until(ExpectedConditions.elementToBeClickable(country));
-                country.click();
-                countryFound = true;
-                break;
+        Allure.step("test-step", step -> {
+            try {
+                Thread.sleep(1000); // Consider replacing with a proper wait
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
-        Assertions.assertTrue(countryFound, "Country '" + nameOfCountry + "' not found in the list");
-        verifyMoviesFromCountry(nameOfCountry);
-        return pageManager.getTopMoviesPage();
+            wait.until(ExpectedConditions.visibilityOf(allCountriesButton));
+            wait.until(ExpectedConditions.elementToBeClickable(allCountriesButton));
+            Assertions.assertTrue(allCountriesButton.isDisplayed(), "All Countries button is not displayed");
+            allCountriesButton.click();
+
+            wait.until(ExpectedConditions.visibilityOfAllElements(countryList));
+            boolean countryFound = false;
+            for (WebElement country : countryList) {
+                if (country.getText().equalsIgnoreCase(nameOfCountry)) {
+                    wait.until(ExpectedConditions.elementToBeClickable(country));
+                    country.click();
+                    countryFound = true;
+                    break;
+                }
+            }
+            Assertions.assertTrue(countryFound, "Country '" + nameOfCountry + "' not found in the list");
+            verifyMoviesFromCountry(nameOfCountry);
+        });
+            return pageManager.getTopMoviesPage();
     }
     public void verifyMoviesFromCountry(String nameOfCountry) {
         wait.until(ExpectedConditions.visibilityOfAllElements(movieList));

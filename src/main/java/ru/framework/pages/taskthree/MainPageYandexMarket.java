@@ -1,5 +1,6 @@
 package ru.framework.pages.taskthree;
 
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -35,7 +36,6 @@ public class MainPageYandexMarket extends BasePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         // Ensure the "Notebooks and Computers" menu item is visible and clickable
         waitUtilElementToBeVisible(itemMenu);
         waitUtilElementToBeClickable(itemMenu);
@@ -55,7 +55,6 @@ public class MainPageYandexMarket extends BasePage {
         // Validate the URL to ensure the correct page is opened
         wait.until(ExpectedConditions.urlContains("/catalog--noutbuki/54544/list?hid=91013"));
         Assertions.assertTrue(driverManager.getDriver().getCurrentUrl().contains("/catalog--noutbuki/54544/list?hid=91013"), "URL does not contain the expected path");
-
         return pageManager.getLaptopsPage();
     }
 }
