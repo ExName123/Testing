@@ -1,6 +1,11 @@
 package ru.framework.managers;
 
+import ru.framework.pages.taskfour.MainPageKinopoisk;
+import ru.framework.pages.taskfour.MoviePage;
+import ru.framework.pages.taskfour.MoviesPage;
+import ru.framework.pages.taskfour.TopMoviesPage;
 import ru.framework.pages.taskone.MainPageLambdaSampleApp;
+import ru.framework.pages.taskthree.CartPage;
 import ru.framework.pages.taskthree.LaptopsPage;
 import ru.framework.pages.taskthree.MainPageYandexMarket;
 import ru.framework.pages.tasktwo.MainPagePolytech;
@@ -15,7 +20,11 @@ public class PageManager {
     private RaspDmamiPage raspDmamiPage;
     private MainPageYandexMarket mainPageYandexMarket;
     private LaptopsPage laptopsPage;
-
+    private CartPage cartPage;
+    private MainPageKinopoisk mainPageKinopoisk;
+    private MoviePage moviePage;
+    private MoviesPage moviesPage;
+    private TopMoviesPage topMoviesPage;
     private PageManager() {
 
     }
@@ -61,5 +70,35 @@ public class PageManager {
             laptopsPage = new LaptopsPage();
         }
         return laptopsPage;
+    }
+    public CartPage getCartPage() {
+        if (cartPage == null) {
+            cartPage = new CartPage();
+        }
+        return cartPage;
+    }
+    public MainPageKinopoisk getMainPageKinopoisk() {
+        if (mainPageKinopoisk == null) {
+            mainPageKinopoisk = new MainPageKinopoisk();
+        }
+        return mainPageKinopoisk;
+    }
+    public MoviePage getMoviePage() {
+        if (moviePage == null) {
+            moviePage = new MoviePage();
+        }
+        return moviePage;
+    }
+    public MoviesPage getMoviesPage() {
+        if (moviesPage == null) {
+            moviesPage = new MoviesPage();
+        }
+        return moviesPage;
+    }
+    public TopMoviesPage getTopMoviesPage() {
+        if (topMoviesPage == null) {
+            topMoviesPage = new TopMoviesPage();
+        }
+        return topMoviesPage;
     }
 }

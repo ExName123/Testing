@@ -10,7 +10,8 @@ public class YandexMarketTest extends BaseTests {
                 .checkOpenCatalogAndSelectLaptops()
                 .checkLogFirstFiveProducts()
                 .checkAddToCartSecondProduct()
-                .goToCart(pageManager.getLaptopsPage().getSecondProductTitle(), pageManager.getLaptopsPage().getSecondProductPrice())
+                .goToCart()
+                .checkItemsCart(pageManager.getLaptopsPage().getSecondProductTitle(), pageManager.getLaptopsPage().getSecondProductPrice())
                 .checkIncreaseQuantityAndVerifyPrice()
                 .checkRemoveProductAndVerifyMessage();
     }
