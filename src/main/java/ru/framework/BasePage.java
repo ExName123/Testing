@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.framework.managers.DriverManager;
 import ru.framework.managers.PageManager;
 
+import java.util.List;
+
 public class BasePage {
     protected DriverManager driverManager = DriverManager.getInstance();
     protected WebDriver driver = driverManager.getDriver();
@@ -34,5 +36,10 @@ public class BasePage {
     protected WebElement scrollToElementJs(WebElement element) {
         js.executeScript("arguments[0].scrollIntoView(true);", element);
         return element;
+    }
+    protected void waitUtilElementsToBeVisible(List<WebElement> elements) {
+        for (WebElement element : elements) {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        }
     }
 }

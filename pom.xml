@@ -23,6 +23,10 @@
         <selenium-java.version>4.0.0</selenium-java.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <logback-classic.version>1.2.6</logback-classic.version>
+        <junit-jupiter-api>5.9.2</junit-jupiter-api>
+        <selenium-http-jdk-client>4.5.0</selenium-http-jdk-client>
+        <logback-classic>1.2.6</logback-classic>
+        <slf4j-api>1.7.30</slf4j-api>
     </properties>
 
     <build>
@@ -64,12 +68,12 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-http-jdk-client</artifactId>
-            <version>4.5.0</version>
+            <version>${selenium-http-jdk-client}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.6</version>
+            <version>${logback-classic}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -101,8 +105,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.9.2</version>
+            <version>${junit-jupiter-api}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api}</version>
         </dependency>
     </dependencies>
 </project>

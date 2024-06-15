@@ -1,6 +1,7 @@
 package ru.framework.managers;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import ru.framework.utils.PropsConst;
 
@@ -37,8 +38,8 @@ public class DriverManager {
     private void initDriver() {
         if (propManager.getProperty(PropsConst.TYPE_BROWSER).equals("edge")) {
             System.setProperty("webdriver.http.factory", "jdk-http-client");
-            System.setProperty("webdriver.edge.driver", propManager.getProperty(PropsConst.PATH_EDGE_DRIVER_WINDOWS));
-            driver = new EdgeDriver();
+            System.setProperty("webdriver.chrome.driver", propManager.getProperty(PropsConst.PATH_EDGE_DRIVER_WINDOWS));
+            driver = new ChromeDriver();
         } else {
             System.out.println("Absent driver for your browser");
             return;

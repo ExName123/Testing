@@ -1,6 +1,7 @@
 package ru.framework.managers;
 
 import ru.framework.pages.taskone.MainPageLambdaSampleApp;
+import ru.framework.pages.taskthree.LaptopsPage;
 import ru.framework.pages.taskthree.MainPageYandexMarket;
 import ru.framework.pages.tasktwo.MainPagePolytech;
 import ru.framework.pages.tasktwo.PageShedulePolytech;
@@ -13,6 +14,7 @@ public class PageManager {
     private PageShedulePolytech pageShedulePolytech;
     private RaspDmamiPage raspDmamiPage;
     private MainPageYandexMarket mainPageYandexMarket;
+    private LaptopsPage laptopsPage;
 
     private PageManager() {
 
@@ -53,5 +55,11 @@ public class PageManager {
             mainPageYandexMarket = new MainPageYandexMarket();
         }
         return mainPageYandexMarket;
+    }
+    public LaptopsPage getLaptopsPage() {
+        if (laptopsPage == null) {
+            laptopsPage = new LaptopsPage();
+        }
+        return laptopsPage;
     }
 }
