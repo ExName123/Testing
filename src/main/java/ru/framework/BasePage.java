@@ -21,6 +21,7 @@ public class BasePage {
     public BasePage() {
         PageFactory.initElements(driver, this);
     }
+
     protected WebElement waitUtilElementToBeClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }

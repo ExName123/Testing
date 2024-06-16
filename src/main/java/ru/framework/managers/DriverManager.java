@@ -38,8 +38,8 @@ public class DriverManager {
     private void initDriver() {
         if (propManager.getProperty(PropsConst.TYPE_BROWSER).equals("edge")) {
             System.setProperty("webdriver.http.factory", "jdk-http-client");
-            System.setProperty("webdriver.chrome.driver", propManager.getProperty(PropsConst.PATH_EDGE_DRIVER_WINDOWS));
-            driver = new ChromeDriver();
+            System.setProperty("webdriver.edge.driver", propManager.getProperty(PropsConst.PATH_EDGE_DRIVER_WINDOWS));
+            driver = new EdgeDriver();
         } else {
             System.out.println("Absent driver for your browser");
             return;

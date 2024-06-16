@@ -28,7 +28,6 @@ public class PageManager {
     private PageManager() {
 
     }
-
     public static PageManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new PageManager();

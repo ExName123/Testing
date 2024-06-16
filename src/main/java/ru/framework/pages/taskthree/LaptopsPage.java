@@ -1,5 +1,6 @@
 package ru.framework.pages.taskthree;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,8 +16,6 @@ import java.util.regex.Pattern;
 import java.util.List;
 
 public class LaptopsPage extends BasePage {
-    private static final Logger logger = LoggerFactory.getLogger(LaptopsPage.class);
-
     @FindBy(xpath = "//div[@class='_3RyfO SerpLayout serverList-item _1MOwX _1bCJz _28-dA']//h3")
     private List<WebElement> productTitles;
 
@@ -45,24 +44,26 @@ public class LaptopsPage extends BasePage {
     private WebElement cartButton;
     private String secondProductTitle;
     private String secondProductPrice;
+    private static final Logger logger = LoggerFactory.getLogger(LaptopsPage.class);
 
+    @Step("Check open catalog and select laptops")
     public LaptopsPage checkLogFirstFiveProducts() {
-        // Убедиться, что элементы с названиями и ценами продуктов видимы
+        logger.info("Check open catalog and select laptops");
+
         waitUtilElementsToBeVisible(productTitles);
         waitUtilElementsToBeVisible(productPrices);
 
-        // Проверить, что список товаров и цен не пустой
         Assertions.assertFalse(productTitles.isEmpty(), "Product titles list is empty");
         Assertions.assertFalse(productPrices.isEmpty(), "Product prices list is empty");
 
-        // Проверить, что все элементы товаров и цен отображаются
+        // Check that all product and price elements are displayed
         for (WebElement titleElement : productTitles) {
             Assertions.assertTrue(titleElement.isDisplayed(), "Product title element is not displayed");
         }
         for (WebElement priceElement : productPrices) {
             Assertions.assertTrue(priceElement.isDisplayed(), "Product price element is not displayed");
         }
-        // Логировать первые пять найденных товаров
+        // Log the first five products found
         for (int i = 0; i < 5 && i < productTitles.size() && i < productPrices.size(); i++) {
             String title = productTitles.get(i).getText();
             String price = productPrices.get(i).getText();
@@ -71,25 +72,37 @@ public class LaptopsPage extends BasePage {
         return pageManager.getLaptopsPage();
     }
 
+    @Step("Check add to cart second product")
     public LaptopsPage checkAddToCartSecondProduct() {
-        // Убедиться, что все элементы видимы
+        logger.info("Check add to cart second product");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         waitUtilElementsToBeVisible(productTitles);
         waitUtilElementsToBeVisible(productPrices);
         waitUtilElementsToBeVisible(addToCartButtons);
 
-        // Проверить, что есть хотя бы два товара
+        //Check that there are at least two products
         Assertions.assertTrue(productTitles.size() >= 2, "There are less than two products");
 
-        // Запомнить вторую позицию из списка товаров (название и цену)
+        //Remember the second position from the list of products (name and price)
         secondProductTitle = productTitles.get(1).getText();
         secondProductPrice = productPrices.get(1).getText();
         logger.info("Second product: Title - {}, Price - {}", secondProductTitle, secondProductPrice);
 
-        // Нажать кнопку "В корзину" для второго товара
         WebElement secondAddToCartButton = addToCartButtons.get(1);
         waitUtilElementToBeClickable(secondAddToCartButton).click();
+        try {
+            Thread.sleep(3000); // Consider replacing with a proper wait
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        // Проверить, что после нажатия кнопки "В корзину" появляются необходимые элементы
+        // Check that after clicking the "Add to Cart" button, the necessary items appear
         wait.until(ExpectedConditions.visibilityOf(cartCounter));
         Assertions.assertTrue(cartCounter.isDisplayed(), "Cart counter is not displayed");
         Assertions.assertTrue(decreaseButton.isDisplayed(), "Decrease button is not displayed");
@@ -97,33 +110,43 @@ public class LaptopsPage extends BasePage {
         Assertions.assertTrue(itemsCount.isDisplayed(), "Items count is not displayed");
         Assertions.assertEquals("1", itemsCount.getText(), "Items count is not '1'");
 
-        // Проверить, что всплывающее сообщение "Товар успешно добавлен в корзину" появляется
+        // Check that the pop-up message "Item successfully added to cart" appears
         wait.until(ExpectedConditions.visibilityOf(notification));
         Assertions.assertTrue(notification.isDisplayed(), "Add to cart success notification is not displayed");
         Assertions.assertTrue(notification.getAttribute("data-zone-data").contains("Товар успешно добавлен в корзину"), "Notification message does not match");
+
         try {
             Thread.sleep(1000); // Consider replacing with a proper wait
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         return pageManager.getLaptopsPage();
-        // Проверить, что внутри всплывающего сообщения есть кнопка "Перейти в корзину"
-//        WebElement goToCartButton = notification.findElement(By.xpath(".//button[contains(text(), 'Перейти в корзину')]"));
-//        Assertions.assertTrue(goToCartButton.isDisplayed(), "Go to cart button inside success message is not displayed");
     }
 
+    @Step("Check go to cart")
     public CartPage goToCart() {
+        logger.info("Check go to cart");
+
         try {
-            Thread.sleep(1000); // Consider replacing with a proper wait
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Нажать кнопку "Корзина"
+
         waitUtilElementToBeClickable(cartButton).click();
+        wait.until(ExpectedConditions.urlContains("https://market.yandex.ru/my/cart"));
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return pageManager.getCartPage();
     }
-        public String getSecondProductTitle() {
+
+    public String getSecondProductTitle() {
         return secondProductTitle;
     }
 

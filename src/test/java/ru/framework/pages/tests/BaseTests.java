@@ -18,12 +18,6 @@ public class BaseTests {
     public static void beforeClass() {
         InitManager.initFramework();
     }
-
-    @BeforeEach
-    public void before() {
-        driverManager.getDriver().get(propManager.getProperty(PropsConst.BASE_URL));
-    }
-
     @AfterAll
     public static void afterClass() {
         InitManager.quitFramework();

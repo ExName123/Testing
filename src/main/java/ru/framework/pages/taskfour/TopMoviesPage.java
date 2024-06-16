@@ -1,11 +1,17 @@
 package ru.framework.pages.taskfour;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.framework.BasePage;
+import ru.framework.managers.TestPropManager;
+import ru.framework.utils.PropsConst;
 
 import java.util.List;
 
@@ -28,35 +34,42 @@ public class TopMoviesPage extends BasePage {
     // Элемент сортировки по количеству оценок
     @FindBy(xpath = "//span[text()='По количеству оценок']")
     private WebElement sortByRatings;
-    // Нажатие на кнопку "Все страны" и выбор страны
-    public TopMoviesPage checkSelectCountry(String nameOfCountry) {
-        Allure.step("test-step", step -> {
-            try {
-                Thread.sleep(1000); // Consider replacing with a proper wait
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            wait.until(ExpectedConditions.visibilityOf(allCountriesButton));
-            wait.until(ExpectedConditions.elementToBeClickable(allCountriesButton));
-            Assertions.assertTrue(allCountriesButton.isDisplayed(), "All Countries button is not displayed");
-            allCountriesButton.click();
+    private static final Logger logger = LoggerFactory.getLogger(MoviesPage.class);
 
-            wait.until(ExpectedConditions.visibilityOfAllElements(countryList));
-            boolean countryFound = false;
-            for (WebElement country : countryList) {
-                if (country.getText().equalsIgnoreCase(nameOfCountry)) {
-                    wait.until(ExpectedConditions.elementToBeClickable(country));
-                    country.click();
-                    countryFound = true;
-                    break;
-                }
+    @Step("Check select country")
+    public TopMoviesPage checkSelectCountry(String nameOfCountry) {
+        logger.info("Check select country");
+
+        try {
+            Thread.sleep(1000); // Consider replacing with a proper wait
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        wait.until(ExpectedConditions.visibilityOf(allCountriesButton));
+        wait.until(ExpectedConditions.elementToBeClickable(allCountriesButton));
+        Assertions.assertTrue(allCountriesButton.isDisplayed(), "All Countries button is not displayed");
+        allCountriesButton.click();
+
+        wait.until(ExpectedConditions.visibilityOfAllElements(countryList));
+        boolean countryFound = false;
+        for (WebElement country : countryList) {
+            if (country.getText().equalsIgnoreCase(nameOfCountry)) {
+                wait.until(ExpectedConditions.elementToBeClickable(country));
+                country.click();
+                countryFound = true;
+                break;
             }
-            Assertions.assertTrue(countryFound, "Country '" + nameOfCountry + "' not found in the list");
-            verifyMoviesFromCountry(nameOfCountry);
-        });
-            return pageManager.getTopMoviesPage();
+        }
+        Assertions.assertTrue(countryFound, "Country '" + nameOfCountry + "' not found in the list");
+        verifyMoviesFromCountry(nameOfCountry);
+
+        return pageManager.getTopMoviesPage();
     }
+
+    @Step("Verify movies from country")
     public void verifyMoviesFromCountry(String nameOfCountry) {
+        logger.info("Check select country");
+
         wait.until(ExpectedConditions.visibilityOfAllElements(movieList));
         Assertions.assertFalse(movieList.isEmpty(), "No movies found in the list");
 
@@ -70,10 +83,12 @@ public class TopMoviesPage extends BasePage {
         Assertions.assertTrue(movieFound, "No movies from '" + nameOfCountry + "' found in the list");
     }
 
-    // Проверка перехода на страницу "250 лучших фильмов"
+    @Step("Check verify top 250 movies page")
     public TopMoviesPage checkVerifyTop250MoviesPage() {
+        logger.info("Check verify top 250 movies page");
+
         try {
-            Thread.sleep(1000); // Consider replacing with a proper wait
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -82,9 +97,13 @@ public class TopMoviesPage extends BasePage {
         Assertions.assertTrue(driver.getCurrentUrl().contains("/lists/movies/top250/"), "Did not navigate to the Top 250 Movies page");
         return pageManager.getTopMoviesPage();
     }
-    public void checkSortingByNumberOfRatings() {
+
+    @Step("Check string by number of ratings")
+    public TopMoviesPage checkSortingByNumberOfRatings() {
+        logger.info("Check string by number of ratings");
+
         try {
-            Thread.sleep(1000); // Consider replacing with a proper wait
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -102,5 +121,7 @@ public class TopMoviesPage extends BasePage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        return pageManager.getTopMoviesPage();
     }
 }
