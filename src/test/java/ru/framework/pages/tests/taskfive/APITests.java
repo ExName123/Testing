@@ -1,28 +1,26 @@
 package ru.framework.pages.tests.taskfive;
 
-import io.qameta.allure.Step;
 import io.restassured.module.jsv.JsonSchemaValidator;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import ru.framework.pages.taskfive.*;
 import ru.framework.pages.tests.taskfive.base.BaseTest;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.core.IsEqual.equalTo;
-import org.junit.Test;
-import org.junit.Assert;
-import static ru.framework.pages.tests.taskfive.base.BaseTest.*;
+import io.qameta.allure.Step;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class APITests extends BaseTest {
 
     public APITests(){
         super();
     }
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         BaseTest.setUp();
         requestSpecification.basePath("/users");
@@ -48,13 +46,13 @@ public class APITests extends BaseTest {
     public void validateListUsersDTO() {
         UsersPage usersPage = checkStatusCodeGet("https://reqres.in/api/users?page=2", 200)
                 .extract().as(UsersPage.class);
-        Assert.assertEquals(usersPage.getPage().intValue(), 2);
-        Assert.assertEquals(usersPage.getPer_page().intValue(), 6);
-        Assert.assertEquals(usersPage.getTotal().intValue(), 12);
-        Assert.assertEquals(usersPage.getTotal_pages().intValue(), 2);
-        Assert.assertFalse(usersPage.getData().isEmpty());
-        Assert.assertEquals(usersPage.getData().get(2).getFirst_name(), "Tobias");
-        Assert.assertEquals(usersPage.getData().get(2).getLast_name(), "Funke");
+        Assertions.assertEquals(usersPage.getPage().intValue(), 2);
+        Assertions.assertEquals(usersPage.getPer_page().intValue(), 6);
+        Assertions.assertEquals(usersPage.getTotal().intValue(), 12);
+        Assertions.assertEquals(usersPage.getTotal_pages().intValue(), 2);
+        Assertions.assertFalse(usersPage.getData().isEmpty());
+        Assertions.assertEquals(usersPage.getData().get(2).getFirst_name(), "Tobias");
+        Assertions.assertEquals(usersPage.getData().get(2).getLast_name(), "Funke");
     }
 
     @Test
@@ -111,7 +109,7 @@ public class APITests extends BaseTest {
         String responseBody = checkStatusCodeGet("https://reqres.in/api/users/22", 404)
                 .extract()
                 .asString();
-        Assert.assertEquals("{}", responseBody, "{}");
+        Assertions.assertEquals("{}", responseBody, "{}");
     }
 
     @Test
@@ -125,8 +123,8 @@ public class APITests extends BaseTest {
         PeopleCreater peopleCreater = checkStatusCodePost(people, "https://reqres.in/api/users", 201)
                 .extract()
                 .as(PeopleCreater.class);
-        Assert.assertEquals(peopleCreater.getName(), people.getName());
-        Assert.assertEquals(peopleCreater.getJob(), people.getJob());
+        Assertions.assertEquals(peopleCreater.getName(), people.getName());
+        Assertions.assertEquals(peopleCreater.getJob(), people.getJob());
     }
 
     @Test
@@ -138,9 +136,9 @@ public class APITests extends BaseTest {
     public void validateListResource() {
         List<UsersPage> usersPageList = checkStatusCodeGet("https://reqres.in/api/unknown", 200)
                 .extract().jsonPath().getList("data", UsersPage.class);
-        Assert.assertNotNull("Список не должен быть null", usersPageList);
-        Assert.assertFalse("Список не должен быть пустым", usersPageList.isEmpty());
-        Assert.assertEquals("Ожидалось шесть элементов в списке", 6, usersPageList.size());
+        Assertions.assertNotNull(usersPageList,"Список не должен быть null");
+        Assertions.assertFalse(usersPageList.isEmpty(),"Список не должен быть пустым");
+        Assertions.assertEquals(6, usersPageList.size(),"Ожидалось шесть элементов в списке");
     }
 
     @Test

@@ -1,17 +1,17 @@
 package ru.framework.pages.tests.taskfive;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import ru.framework.managers.DriverManager;
 import ru.framework.managers.InitManager;
 import ru.framework.pages.taskfive.ReqresPage;
-import io.qameta.allure.junit4.DisplayName;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class FrontReqresPageTest {
     private static final DriverManager driverManager = DriverManager.getInstance();
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass(){
         InitManager.initFramework();
         driverManager.getDriver().get("https://reqres.in/");
@@ -38,7 +38,7 @@ public class FrontReqresPageTest {
                 .clickOnButtonAndCheckAPI("Login - unsuccessful", "post")
                 .clickOnButtonAndCheckAPI("Delayed response", "get");
     }
-    @AfterClass
+    @AfterAll
     public static void after() {
         InitManager.quitFramework();
     }

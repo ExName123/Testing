@@ -4,7 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import ru.framework.pages.taskfive.People;
 
 import static io.restassured.RestAssured.given;
@@ -13,7 +13,7 @@ public class BaseTest {
     public static RequestSpecification requestSpecification;
     static final String BASE_URL = "https://reqres.in/api";
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         requestSpecification = RestAssured.given()
                 .baseUri(BASE_URL)

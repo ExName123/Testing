@@ -9,13 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.framework.managers.DriverManager;
 import ru.framework.managers.PageManager;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BasePage {
     protected DriverManager driverManager = DriverManager.getInstance();
     protected WebDriver driver = driverManager.getDriver();
     protected PageManager pageManager = PageManager.getInstance();
-    protected WebDriverWait wait = new WebDriverWait(driver, 10, 1000);
+    protected WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofSeconds(1));
     protected JavascriptExecutor js = (JavascriptExecutor) driverManager.getDriver();
 
     public BasePage() {

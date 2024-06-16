@@ -15,21 +15,12 @@
         <project.reporting.outputEncoding>${encoding.type}</project.reporting.outputEncoding>
         <file.encoding>${encoding.type}</file.encoding>
         <!-- JDK version project -->
-        <java.version>11</java.version>
+        <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <!-- Dependencies version -->
-        <junit-jupiter.version>5.7.1</junit-jupiter.version>
-        <selenium-java.version>4.0.0</selenium-java.version>
-        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-        <logback-classic.version>1.2.6</logback-classic.version>
-        <junit-jupiter-api>5.9.2</junit-jupiter-api>
-        <selenium-http-jdk-client>4.5.0</selenium-http-jdk-client>
-        <logback-classic>1.2.6</logback-classic>
-        <slf4j-api>1.7.30</slf4j-api>
         <allure.version>2.26.0</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
-        <maven-surefire.version>3.0.0-M5</maven-surefire.version>
+        <!-- Dependencies version -->
     </properties>
 
     <dependencyManagement>
@@ -50,79 +41,33 @@
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
         <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-edge-driver</artifactId>
-            <version>${selenium-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-http-jdk-client</artifactId>
-            <version>${selenium-http-jdk-client}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback-classic}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>${maven-jar-plugin.version}</version>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.25.3</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>${selenium-java.version}</version>
+            <version>4.20.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback-classic.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter-api}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.10.2</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.32</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.17.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.17.1</version>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -134,48 +79,14 @@
             <artifactId>json-schema-validator</artifactId>
             <version>5.4.0</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.testng</groupId>-->
-        <!--            <artifactId>testng</artifactId>-->
-        <!--            <version>6.9.10</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.25.3</version>
-        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit5 -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit4</artifactId>
-            <version>2.22.2</version>
+            <artifactId>allure-junit5</artifactId>
         </dependency>
     </dependencies>
     <build>
         <plugins>
-            <!-- Compiler Plugin Configuration -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${encoding.type}</encoding>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.22</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
             <!-- Surefire Plugin Configuration -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
