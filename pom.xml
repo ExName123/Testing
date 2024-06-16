@@ -29,6 +29,7 @@
         <slf4j-api>1.7.30</slf4j-api>
         <allure.version>2.26.0</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
+        <maven-surefire.version>3.0.0-M5</maven-surefire.version>
     </properties>
 
     <build>
@@ -55,14 +56,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>${maven-surefire.version}</version>
                 <configuration>
-                    <forkCount>1</forkCount>
-                    <useSystemClassLoader>true</useSystemClassLoader>
+                    <skip>false</skip>
+                    <skipTests>false</skipTests>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <includes>**/*Test.java</includes>
                     <argLine>
+                        -Dfile.encoding=${encoding.type}
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/reports/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>front.utils.AllureListener</value>
+                        </property>
+                    </properties>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -72,16 +84,25 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!-- Allure Plugin Configuration -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>2.12.0</version>
-
                 <configuration>
-                    <reportVersion>${allure.version}</reportVersion>
+                    <reportVersion>2.12.0</reportVersion>
                     <resultsDirectory>${project.build.directory}/reports/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/reports/allure-reports</reportDirectory>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>allure-plugin</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>serve</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -191,6 +212,17 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.testng</groupId>-->
+<!--            <artifactId>testng</artifactId>-->
+<!--            <version>6.9.10</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.25.3</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>

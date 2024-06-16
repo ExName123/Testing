@@ -24,7 +24,7 @@ public class CartPage extends BasePage {
         logger.info("Check items cart");
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

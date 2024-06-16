@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Тестирование базовых функций ЕТС">
+    <test name="Authorization">
+        <classes>
+            <class name="ru.framework.pages.tests.taskfive.APITests">
+                <methods>
+                    <include name="checkListUsersValidate"/>
+                    <include name="validateListUsersDTO"/>
+                    <include name="validateUserFromResponse"/>
+                    <include name="validateSingleResource"/>
+                    <include name="validateSingleResourceNotFound"/>
+                    <include name="validateUserNotFound"/>
+                    <include name="validateCreateUser"/>
+                    <include name="validateListResource"/>
+                    <include name="validatePutUser"/>
+                    <include name="validatePatchUser"/>
+                    <include name="validateDeleteUser"/>
+                    <include name="validateRegisterUser"/>
+                    <include name="validateUnsuccessfulRegisterUser"/>
+                    <include name="validateLoginUser"/>
+                    <include name="validateUnsuccessfulLoginUser"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
