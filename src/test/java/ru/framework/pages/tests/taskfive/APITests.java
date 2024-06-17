@@ -4,6 +4,7 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.framework.pages.taskfive.*;
@@ -17,9 +18,10 @@ import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 import io.qameta.allure.Step;
+import ru.framework.utils.ScreenshotListener;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-
+@ExtendWith(ScreenshotListener.class)
 public class APITests extends BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(APITests.class);
 
