@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 public class UserData {
     private Integer id;
-
     private String email;
     @JsonProperty("first_name")
     private String first_name;

@@ -16,7 +16,5 @@ public class UsersPage {
     Integer total;
     Integer total_pages;
     List<UserData> data;
-
     Support support;
-
 }

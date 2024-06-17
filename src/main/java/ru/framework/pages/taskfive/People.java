@@ -19,7 +19,6 @@ public class People {
     }
     @Override
     public boolean equals(Object obj) {
-        // Это нужно доработать для правильного сравнения объектов, если необходимо
         return super.equals(obj);
     }
 }
