@@ -4,7 +4,10 @@ import io.restassured.module.jsv.JsonSchemaValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.framework.pages.taskfive.*;
+import ru.framework.pages.taskfour.MainPageKinopoisk;
 import ru.framework.pages.tests.taskfive.base.BaseTest;
 
 import java.util.List;
@@ -12,14 +15,18 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.core.IsEqual.equalTo;
+
 import io.qameta.allure.Step;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class APITests extends BaseTest {
+    private static final Logger logger = LoggerFactory.getLogger(APITests.class);
 
-    public APITests(){
+    public APITests() {
         super();
     }
+
     @BeforeAll
     public static void setUp() {
         BaseTest.setUp();
@@ -31,8 +38,10 @@ public class APITests extends BaseTest {
         validateListUsersJSONSchema();
     }
 
-    @Step("Валидация списка пользователей через схему JSON")
+    @Step("Validating a list of users via JSON schema")
     public void validateListUsersJSONSchema() {
+        logger.info("Validating a list of users via JSON schema");
+
         sendGetRequest(200)
                 .assertThat().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("UsersSchema.json"));
     }
@@ -42,8 +51,10 @@ public class APITests extends BaseTest {
         validateListUsersDTO();
     }
 
-    @Step("Проверка данных пользователей через DTO")
+    @Step("Validating user data via DTO")
     public void validateListUsersDTO() {
+        logger.info("Validating user data via DTO");
+
         UsersPage usersPage = checkStatusCodeGet("https://reqres.in/api/users?page=2", 200)
                 .extract().as(UsersPage.class);
         Assertions.assertEquals(usersPage.getPage().intValue(), 2);
@@ -60,15 +71,17 @@ public class APITests extends BaseTest {
         validateUserFromResponse();
     }
 
-    @Step("Проверка данных одного пользователя")
+    @Step("Single user data verification")
     public void validateUserFromResponse() {
+        logger.info("Single user data verification");
+
         UserData userData = checkStatusCodeGet("https://reqres.in/api/users/2", 200)
                 .extract().body().jsonPath().getObject("data", UserData.class);
-        assertThat("Идентификатор пользователя должен быть равен 2", userData.getId(), is(2));
-        assertThat("Адрес электронной почты пользователя должен быть janet.weaver@reqres.in", userData.getEmail(), is("janet.weaver@reqres.in"));
-        assertThat("Имя пользователя должно быть Джанет", userData.getFirst_name(), is("Janet"));
-        assertThat("Фамилия пользователя должна быть Weaver", userData.getLast_name(), is("Weaver"));
-        assertThat("Аватар пользователя должен быть корректным", userData.getAvatar(), is("https://reqres.in/img/faces/2-image.jpg"));
+        assertThat("User ID must be 2", userData.getId(), is(2));
+        assertThat("The user's email address must be janet.weaver@reqres.in", userData.getEmail(), is("janet.weaver@reqres.in"));
+        assertThat("Username should be Janet", userData.getFirst_name(), is("Janet"));
+        assertThat("The user's last name must be Weaver", userData.getLast_name(), is("Weaver"));
+        assertThat("The user avatar must be correct", userData.getAvatar(), is("https://reqres.in/img/faces/2-image.jpg"));
     }
 
     @Test
@@ -76,8 +89,10 @@ public class APITests extends BaseTest {
         validateSingleResource();
     }
 
-    @Step("Проверка данных одного ресурса")
+    @Step("Checking the data of one resource")
     public void validateSingleResource() {
+        logger.info("Checking the data of one resource");
+
         ColorData resource = checkStatusCodeGet("https://reqres.in/api/unknown/2", 200)
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("ColorSchema.json"))
                 .extract().jsonPath().getObject("data", ColorData.class);
@@ -93,8 +108,10 @@ public class APITests extends BaseTest {
         validateSingleResourceNotFound();
     }
 
-    @Step("Проверка отсутствия ресурса")
+    @Step("Checking for missing resource")
     public void validateSingleResourceNotFound() {
+        logger.info("Checking for missing resource");
+
         checkStatusCodeGet("https://reqres.in/api/unknown/23", 404)
                 .body(equalTo("{}"));
     }
@@ -104,8 +121,10 @@ public class APITests extends BaseTest {
         validateUserNotFound();
     }
 
-    @Step("Проверка отсутствия пользователя")
+    @Step("Checking for user absence")
     public void validateUserNotFound() {
+        logger.info("Checking for user absence");
+
         String responseBody = checkStatusCodeGet("https://reqres.in/api/users/22", 404)
                 .extract()
                 .asString();
@@ -117,8 +136,10 @@ public class APITests extends BaseTest {
         validateCreateUser();
     }
 
-    @Step("Создание пользователя через эндпоинт /api/users POST")
+    @Step("Creating a user via endpoint /api/users POST")
     public void validateCreateUser() {
+        logger.info("Creating a user via endpoint /api/users POST");
+
         People people = new People("morpheus", "leader");
         PeopleCreater peopleCreater = checkStatusCodePost(people, "https://reqres.in/api/users", 201)
                 .extract()
@@ -132,13 +153,15 @@ public class APITests extends BaseTest {
         validateListResource();
     }
 
-    @Step("Получение списка ресурсов")
+    @Step("Getting a list of resources")
     public void validateListResource() {
+        logger.info("Getting a list of resources");
+
         List<UsersPage> usersPageList = checkStatusCodeGet("https://reqres.in/api/unknown", 200)
                 .extract().jsonPath().getList("data", UsersPage.class);
-        Assertions.assertNotNull(usersPageList,"Список не должен быть null");
-        Assertions.assertFalse(usersPageList.isEmpty(),"Список не должен быть пустым");
-        Assertions.assertEquals(6, usersPageList.size(),"Ожидалось шесть элементов в списке");
+        Assertions.assertNotNull(usersPageList, "The list shouldn't be null");
+        Assertions.assertFalse(usersPageList.isEmpty(), "The list must not be empty");
+        Assertions.assertEquals(6, usersPageList.size(), "Expected six elements in the list");
     }
 
     @Test
@@ -146,8 +169,10 @@ public class APITests extends BaseTest {
         validatePutUser();
     }
 
-    @Step("Обновление пользователя через PUT")
+    @Step("User update via PUT")
     public void validatePutUser() {
+        logger.info("User update via PUT");
+
         People people = new People("morpheus", "zion resident");
         checkStatusCodePut(people, "https://reqres.in/api/users/2", 200)
                 .body("name", equalTo("morpheus"))
@@ -159,8 +184,10 @@ public class APITests extends BaseTest {
         validatePatchUser();
     }
 
-    @Step("Частичное обновление пользователя через PATCH")
+    @Step("Partial user update via PATCH")
     public void validatePatchUser() {
+        logger.info("Partial user update via PATCH");
+
         People people = new People("morpheus", "zion resident");
         checkStatusCodePatch(people, "https://reqres.in/api/users/2", 200)
                 .body("name", equalTo("morpheus"))
@@ -172,8 +199,10 @@ public class APITests extends BaseTest {
         validateDeleteUser();
     }
 
-    @Step("Удаление пользователя")
+    @Step("Deleting a user")
     public void validateDeleteUser() {
+        logger.info("Deleting a user");
+
         deleteUser("https://reqres.in/api/users/2", 204)
                 .body(isEmptyOrNullString());
     }
@@ -183,8 +212,10 @@ public class APITests extends BaseTest {
         validateRegisterUser();
     }
 
-    @Step("Регистрация пользователя")
+    @Step("User registration")
     public void validateRegisterUser() {
+        logger.info("User registration");
+
         String requestBody = "{\"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\"}";
         postRegister(requestBody, "https://reqres.in/api/register", 200)
                 .body("id", equalTo(4))
@@ -196,8 +227,10 @@ public class APITests extends BaseTest {
         validateUnsuccessfulRegisterUser();
     }
 
-    @Step("Ошибка при регистрации пользователя")
+    @Step("Error while registering user")
     public void validateUnsuccessfulRegisterUser() {
+        logger.info("Error while registering user");
+
         String requestBody = "{\"email\": \"sydney@fife\"}";
         postRegister(requestBody, "https://reqres.in/api/register", 400)
                 .body("error", equalTo("Missing password"));
@@ -208,8 +241,10 @@ public class APITests extends BaseTest {
         validateLoginUser();
     }
 
-    @Step("Вход пользователя")
+    @Step("User Login")
     public void validateLoginUser() {
+        logger.info("User Login");
+
         String requestBody = "{\"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\"}";
         postRegister(requestBody, "https://reqres.in/api/login", 200)
                 .body("token", equalTo("QpwL5tke4Pnpja7X4"));
@@ -221,8 +256,10 @@ public class APITests extends BaseTest {
     }
 
 
-    @Step("Ошибка при входе пользователя")
+    @Step("User login error")
     public void validateUnsuccessfulLoginUser() {
+        logger.info("User login error");
+
         String requestBody = "{\"email\": \"peter@klaven\"}";
         postRegister(requestBody, "https://reqres.in/api/login", 400)
                 .body("error", equalTo("Missing password"));

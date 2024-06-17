@@ -12,13 +12,13 @@ public class FrontReqresPageTest {
     private static final DriverManager driverManager = DriverManager.getInstance();
 
     @BeforeAll
-    public static void beforeClass(){
+    public static void beforeClass() {
         InitManager.initFramework();
         driverManager.getDriver().get("https://reqres.in/");
     }
 
     @Test
-    @DisplayName("Проверка того, что при нажатии на кнопку отправки образца запроса результат такой же как и через API")
+    @DisplayName("Checking that when you click on the button to send a sample request, the result is the same as through the API")
     public void test() {
         ReqresPage startPage = new ReqresPage();
         startPage.checkOpenPage()
@@ -38,6 +38,7 @@ public class FrontReqresPageTest {
                 .clickOnButtonAndCheckAPI("Login - unsuccessful", "post")
                 .clickOnButtonAndCheckAPI("Delayed response", "get");
     }
+
     @AfterAll
     public static void after() {
         InitManager.quitFramework();

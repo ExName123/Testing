@@ -30,7 +30,6 @@ public class MainPageYandexMarket extends BasePage {
     private static final Logger logger = LoggerFactory.getLogger(MainPageYandexMarket.class);
     @Step("Check URL YandexMarket")
     public MainPageYandexMarket checkUrl() {
-
         logger.info("Check URL YandexMarket");
 
         Assertions.assertTrue(driver.getCurrentUrl().contains("yandex"),

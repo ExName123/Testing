@@ -36,7 +36,7 @@ public class CartPage extends BasePage {
         List<WebElement> cartItems = driverManager.getDriver().findElements(By.xpath("//div//article[@aria-label='Товар']"));
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,7 +94,7 @@ public class CartPage extends BasePage {
         logger.info("Check increase quantity and verify price");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -130,7 +130,7 @@ public class CartPage extends BasePage {
         increaseButton.click();
 
         try {
-            Thread.sleep(2000); // Consider replacing with a proper wait
+            Thread.sleep(1000); // Consider replacing with a proper wait
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -149,7 +149,7 @@ public class CartPage extends BasePage {
         Assertions.assertEquals(expectedPrice, newPrice, 0.01, "The number of products has not increased by 1");
 
         try {
-            Thread.sleep(2000); // Consider replacing with a proper wait
+            Thread.sleep(1000); // Consider replacing with a proper wait
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

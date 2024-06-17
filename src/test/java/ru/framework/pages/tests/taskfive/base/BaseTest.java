@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import ru.framework.pages.taskfive.People;
 
 import static io.restassured.RestAssured.given;
+
 public class BaseTest {
 
     public static RequestSpecification requestSpecification;
@@ -30,7 +31,7 @@ public class BaseTest {
                 .statusCode(code);
     }
 
-    static ValidatableResponse checkStatusCodeGet(int code){
+    static ValidatableResponse checkStatusCodeGet(int code) {
         return given(requestSpecification)
                 .get()
                 .then()
@@ -46,6 +47,7 @@ public class BaseTest {
                 .log().all()
                 .statusCode(code);
     }
+
     public static ValidatableResponse checkStatusCodePost(Object body, String url, int code) {
         return given(requestSpecification)
                 .contentType("application/json")
@@ -55,6 +57,7 @@ public class BaseTest {
                 .log().all()
                 .statusCode(code);
     }
+
     public static ValidatableResponse checkStatusCodePut(People user, String url, int code) {
         System.out.println(url);
         return given(requestSpecification)
@@ -76,7 +79,7 @@ public class BaseTest {
                 .statusCode(code);
     }
 
-    public static ValidatableResponse deleteUser(String url, int code){
+    public static ValidatableResponse deleteUser(String url, int code) {
         return given(requestSpecification)
                 .when()
                 .delete(url)
@@ -84,7 +87,7 @@ public class BaseTest {
                 .statusCode(code);
     }
 
-    public static ValidatableResponse sendGetRequest(int code){
+    public static ValidatableResponse sendGetRequest(int code) {
         return given(requestSpecification)
                 .get()
                 .then()
@@ -92,7 +95,7 @@ public class BaseTest {
                 .statusCode(code);
     }
 
-    public static ValidatableResponse postRegister(String requestBody, String url, int code){
+    public static ValidatableResponse postRegister(String requestBody, String url, int code) {
         return given(requestSpecification)
                 .contentType("application/json")
                 .body(requestBody)
@@ -103,6 +106,4 @@ public class BaseTest {
                 .statusCode(code);
 
     }
-
-    
 }

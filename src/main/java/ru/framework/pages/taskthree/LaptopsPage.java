@@ -77,7 +77,7 @@ public class LaptopsPage extends BasePage {
         logger.info("Check add to cart second product");
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -97,7 +97,7 @@ public class LaptopsPage extends BasePage {
         WebElement secondAddToCartButton = addToCartButtons.get(1);
         waitUtilElementToBeClickable(secondAddToCartButton).click();
         try {
-            Thread.sleep(3000); // Consider replacing with a proper wait
+            Thread.sleep(2000); // Consider replacing with a proper wait
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
